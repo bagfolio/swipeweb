@@ -1,0 +1,134 @@
+# **`Product Requirements Document (PRD)`**
+
+**`Project:`** `Swipefolio – Pre-Launch Landing Page`  
+**`Version:`** `1.0`  
+**`Date:`** `April 15, 2025`  
+**`Owner:`** `Founding Team`
+
+---
+
+## **`1. Overview and Strategic Context`**
+
+`Swipefolio is a next-gen investing platform designed for Gen Z and younger Millennials who feel ignored, intimidated, or overwhelmed by traditional finance. This generation doesn’t want lectures, jargon, or outdated systems. They want meaning, simplicity, and control. Swipefolio exists to meet that need—not just with a product, but with a belief system.`
+
+`This landing page will be our first public statement. It is not a feature showcase. It is not a product tour. It is an invitation—bold, clear, and emotionally resonant. Its goal is to spark curiosity, seed trust, and convert belief into action by joining our waitlist. Every pixel should say: This is different. This is for you.`
+
+---
+
+## **`2. Goals and Objectives`**
+
+`The core objective of this landing page is to introduce Swipefolio’s purpose, resonate emotionally with the target audience, and convert interest into waitlist sign-ups.`
+
+`Specifically:`
+
+* `Communicate our mission within 10 seconds of page load.`  
+* `Validate user frustrations with investing and make them feel understood.`  
+* `Tease the vision without getting bogged down in product specifics.`  
+* `Drive waitlist sign-ups through a clear, simple, and emotionally compelling CTA.`  
+* `Establish an initial brand tone that is confident, empathetic, and radically transparent.`
+
+`This landing page will also serve as the foundation for Swipefolio’s future brand voice, design philosophy, and early community development.`
+
+---
+
+## **`3. Target Audience`**
+
+`Our audience is Gen Z and young Millennials—roughly ages 16 to 27. They’re digitally native, mobile-first, and emotionally intelligent. They’ve grown up in a world of side hustles, student debt, financial misinformation, and viral hype.`
+
+`Psychographically, they are:`
+
+* `Skeptical of financial institutions and mainstream investing tools.`  
+* `Intimidated or overwhelmed by traditional finance.`  
+* `Motivated by authenticity, clarity, and emotional resonance.`  
+* `Curious but cautious—seeking simple, modern ways to grow their money.`  
+* `Influenced by creators, cultural signals, and clean design.`
+
+`Our landing page must speak to them directly—not as users, but as people who want to believe in something better.`
+
+---
+
+## **`4. Page Structure and Content Requirements`**
+
+`The landing page should be a single, smooth-scroll experience with five simple sections:`
+
+1. **`Hero Section`**  
+   `This is our hook. It must immediately express what Swipefolio stands for and invite alignment. One bold headline, one concise subhead, and one primary call-to-action button: “Join the Waitlist.”`  
+2. **`Emotional Problem Statement`**  
+   `This section exists to show users that we see them. Brief, conversational copy should reflect the common frustrations they feel about investing, framed in a way that is validating—not condescending.`  
+3. **`Vision Tease`**  
+   `We hint at the solution. Don’t explain features—signal that a better way is coming. One headline, one supporting line, and optionally a row of three keywords or icons (e.g., Learn, Practice, Empower) that imply the path without spelling it out.`  
+4. **`Waitlist CTA Section`**  
+   `Clean, calm, and confident. One email input field, one CTA button (“Join the Movement” or “Get Early Access”), and one reassuring sentence below about no spam, no pressure. This should feel like an invitation—not a funnel.`  
+5. **`Footer`**  
+   `Minimal and professional. Just a logo, contact email, and link to our privacy policy.`
+
+`The full scroll should take no more than 20–25 seconds to consume.`
+
+---
+
+## **`5. Emotional Journey`**
+
+`The emotional flow of the page should follow this sequence:`
+
+* **`Curiosity`** `– “What is this?”`  
+* **`Recognition`** `– “They understand how I feel.”`  
+* **`Hope`** `– “This feels like something different.”`  
+* **`Confidence`** `– “I trust this.”`  
+* **`Belonging`** `– “I want in.”`
+
+`Every piece of copy, color, and animation should be in service of guiding the user through that journey. The goal is not to explain, but to evoke.`
+
+---
+
+## **`6. Design and Brand Tone`**
+
+`The entire experience must feel bold, minimal, and emotionally clean. Our visual system should reflect clarity, confidence, and warmth without shouting.`
+
+`Design constraints:`
+
+* `Use Swipefolio’s color palette: #6FCFC3, #4CB0A3, #2A6F79. Use tints and gradients intentionally. Avoid pure black or white.`  
+* `Typography: Inter, Poppins, or Satoshi. Strong visual hierarchy, generous spacing.`  
+* `Avoid financial clichés: no graphs, piggy banks, dollar signs, or stock imagery.`  
+* `Prioritize whitespace, smooth scrolling, and subtle motion. Let the content breathe.`  
+* `Never over-explain. Write like you're texting a smart friend.`
+
+`The tone should be confident but never cocky. Aspirational but grounded. Slightly rebellious but always warm. This is not about financial hype. It’s about clarity, empowerment, and self-trust.`
+
+---
+
+## **`7. Technical Requirements`**
+
+* `Hosting: Vercel or Netlify`  
+* `Frontend: React with Next.js preferred for static export`  
+* `Styling: TailwindCSS`  
+* `Form Handling: Supabase or a secure serverless function`  
+* `Data Handling: Input sanitization, encrypted storage, privacy-first design`  
+* `Analytics: Use privacy-friendly platforms like Plausible or Fathom`  
+* `Accessibility: Must pass WCAG AA standards (semantic HTML, alt text, color contrast, keyboard nav)`  
+* `Performance: Page load under 1.5s on 3G mobile`
+
+---
+
+## **`8. Success Metrics`**
+
+`The page will be evaluated based on the following KPIs:`
+
+* `Waitlist sign-up conversion rate`  
+* `Scroll depth (percentage of users reaching the CTA section)`  
+* `Bounce rate`  
+* `Load speed on mobile`  
+* `Accessibility compliance`  
+* `Optional qualitative feedback from users who sign up`
+
+---
+
+## **`9. Final Notes`**
+
+`This page is not a roadmap. It’s not a list of features. It’s not trying to sell finance.`
+
+`It’s a statement of belief, a spark of movement, and the beginning of a relationship with our earliest users.`
+
+`The single question that matters after viewing this page is:`  
+**`“Do I believe in this enough to join?”`**
+
+`If yes, we’ve done our job.`
