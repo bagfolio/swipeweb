@@ -105,7 +105,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className={`absolute inset-0 transition-all duration-500 ${
             isScrolled 
               ? "glass-effect border-b border-[#E1E4E8]/40 opacity-100" 
-              : "opacity-0"
+              : "bg-black/20 backdrop-blur-sm opacity-80"
           }`}></div>
           
           <div className="container mx-auto px-4 relative z-10">
@@ -154,7 +154,7 @@ export default function Layout({ children }: LayoutProps) {
                 {navigationLinks.map((link, index) => (
                   <motion.button
                     key={link.id}
-                    className="text-[#2A353A] hover:text-[#4CB0A3] transition-colors duration-300 font-medium gradient-border-bottom"
+                    className="text-white hover:text-[#6FCFC3] transition-colors duration-300 font-medium gradient-border-bottom"
                     onClick={() => scrollToSection(link.id)}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -191,7 +191,7 @@ export default function Layout({ children }: LayoutProps) {
               
               {/* Mobile Menu Toggle */}
               <motion.button
-                className="md:hidden text-[#2A353A] z-50"
+                className="md:hidden text-white z-50"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
