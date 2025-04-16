@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, TrendingUp, Star, Shield, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import logoPath from "../assets/logo.png";
+import chartPath from "../assets/chart.png";
 
 export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -15,6 +17,7 @@ export default function HeroSection() {
   const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const chartY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   
   useEffect(() => {
     // Trigger animation sequence
@@ -36,20 +39,9 @@ export default function HeroSection() {
     }
   };
 
-  // Staggered animation variants
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3
-      }
-    }
-  };
-
+  // Animation variants
   const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
@@ -80,32 +72,45 @@ export default function HeroSection() {
     })
   };
 
-  // Stats data
-  const stats = [
-    { value: "83%", text: "of Gen Z feel intimidated by traditional finance", icon: TrendingUp },
-    { value: "68%", text: "want investing that aligns with their values", icon: Star },
-    { value: "77%", text: "seek simplicity and meaning in financial decisions", icon: Shield }
-  ];
-
   return (
     <section 
       ref={sectionRef}
-      className="pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden relative dark-hero-gradient min-h-screen flex items-center"
+      className="min-h-screen flex items-center justify-center overflow-hidden relative bg-[#0D1214]"
     >
-      {/* Animated pattern background */}
+      {/* Market chart background with overlay */}
       <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
-        {/* Dark overlay with pattern */}
-        <div className="absolute inset-0 bg-[#1A2225] section-pattern opacity-20" />
+        {/* Chart background image with duotone treatment */}
+        <motion.div 
+          className="absolute inset-0"
+          style={{ y: chartY }}
+        >
+          <div className="absolute inset-0 bg-blend-color-burn">
+            <motion.div 
+              className="w-full h-full bg-cover bg-center opacity-20"
+              style={{
+                backgroundImage: `url(${chartPath})`,
+                filter: "contrast(120%) brightness(50%)",
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.2 }}
+              transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#2A6F79]/30 to-[#0D1214]/50 mix-blend-color-dodge"></div>
+          </div>
+        </motion.div>
+
+        {/* Dark overlay with subtle pattern */}
+        <div className="absolute inset-0 bg-[#0D1214]/90 section-pattern opacity-15" />
         
         {/* Animated diagonal lines */}
-        <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 1920 1080" fill="none" preserveAspectRatio="xMidYMid slice">
-          {Array.from({ length: 12 }).map((_, i) => (
+        <svg className="absolute inset-0 w-full h-full z-1 opacity-20" viewBox="0 0 1920 1080" fill="none" preserveAspectRatio="xMidYMid slice">
+          {Array.from({ length: 8 }).map((_, i) => (
             <motion.line
               key={i}
               x1={0}
-              y1={100 + i * 120}
+              y1={100 + i * 150}
               x2={1920}
-              y2={-200 + i * 120}
+              y2={-200 + i * 150}
               stroke="white"
               strokeWidth="1"
               variants={lineVariants}
@@ -118,51 +123,67 @@ export default function HeroSection() {
         
         {/* Animated gradient pulsing orbs */}
         <motion.div 
-          className="absolute top-0 right-0 w-[40rem] h-[40rem] rounded-full bg-[#4CB0A3]/5 blur-[150px] pulsing-element"
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0.4, 0]) }}
+          className="absolute top-1/4 right-1/4 w-[40rem] h-[40rem] rounded-full bg-[#4CB0A3]/5 blur-[150px] pulsing-element"
+          style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0.5, 0]) }}
         />
         <motion.div 
-          className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full bg-[#6FCFC3]/5 blur-[100px] pulsing-element"
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0.3, 0]) }}
+          className="absolute bottom-1/4 left-1/4 w-[50rem] h-[50rem] rounded-full bg-[#6FCFC3]/5 blur-[160px] pulsing-element"
+          style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0.4, 0]) }}
         />
       </div>
 
       {/* Main content with parallax effect */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.div 
-          className="max-w-5xl mx-auto text-center"
-          variants={staggerContainer}
+          className="max-w-5xl mx-auto flex flex-col items-center justify-center"
           initial="hidden"
           animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.2,
+              }
+            }
+          }}
           style={{ opacity }}
         >
-          {/* Animated badge */}
+          {/* Logo display with animation */}
           <motion.div
-            className="inline-block mb-6"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            className="mb-12 w-full max-w-[280px]"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ 
+              duration: 1.2, 
+              delay: 0.4,
+              ease: [0.22, 1, 0.36, 1]
+            }}
           >
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#6FCFC3]/20 text-[#6FCFC3] text-sm font-medium border border-[#6FCFC3]/30">
-              <Star className="h-3.5 w-3.5 mr-1.5" />
-              Next Generation Investing
-            </span>
+            <img 
+              src={logoPath} 
+              alt="Swipefolio" 
+              className="w-full h-auto"
+              style={{
+                filter: "drop-shadow(0 8px 20px rgba(111, 207, 195, 0.3))"
+              }}
+            />
           </motion.div>
           
-          {/* Hero heading */}
+          {/* Hero heading - much more minimal */}
           <motion.h1 
-            className="text-5xl md:text-6xl lg:text-8xl font-bold leading-tight mb-8 text-white tracking-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-white tracking-tight text-center"
             variants={fadeInUp}
             style={{ y: y1 }}
           >
-            Investing Without{" "}
+            <span className="block">Modern Investing</span>
             <motion.span 
-              className="text-[#6FCFC3] relative inline-block"
+              className="text-[#6FCFC3] relative inline-block mt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
-              <span className="relative z-10">The Nonsense</span>
+              <span className="relative z-10">For Your Generation</span>
               <motion.span 
                 className="absolute -bottom-2 md:-bottom-3 left-0 w-full h-2 md:h-2.5 bg-[#4CB0A3] opacity-40 z-0 rounded"
                 initial={{ width: 0 }}
@@ -172,25 +193,24 @@ export default function HeroSection() {
             </motion.span>
           </motion.h1>
           
-          {/* Subtitle */}
+          {/* Super minimalist subtitle - just one line */}
           <motion.p 
-            className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
+            className="text-xl md:text-2xl text-white/70 mb-14 max-w-xl mx-auto font-light"
             variants={fadeInUp}
             style={{ y: y1 }}
           >
-            A next-gen investing platform built for your generation. 
-            <span className="block mt-3">No lectures. No jargon. Just clarity, meaning, and control.</span>
+            No jargon. Just clarity, meaning, and control.
           </motion.p>
           
           {/* Call to action buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24"
+            className="flex flex-col sm:flex-row items-center justify-center gap-8"
             variants={fadeInUp}
             style={{ y: y2 }}
           >
             <motion.button 
               onClick={scrollToWaitlist}
-              className="relative px-10 py-5 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] text-white rounded-lg text-lg font-medium shadow-xl group overflow-hidden"
+              className="relative px-14 py-5 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] text-white rounded-lg text-lg font-medium shadow-xl group overflow-hidden"
               whileHover={{ 
                 scale: 1.03,
                 boxShadow: "0 15px 30px -5px rgba(42, 111, 121, 0.5)"
@@ -198,7 +218,7 @@ export default function HeroSection() {
               whileTap={{ scale: 0.98 }}
             >
               <span className="relative z-10 flex items-center">
-                Join the Waitlist
+                Join Waitlist
                 <motion.span
                   className="ml-2" 
                   initial={{ x: 0 }}
@@ -255,55 +275,26 @@ export default function HeroSection() {
             </motion.button>
           </motion.div>
           
-          {/* Statistics cards with staggered animation */}
+          {/* Scroll indicator */}
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-4"
-            initial="hidden"
-            animate={isLoaded ? "visible" : "hidden"}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.15,
-                  delayChildren: 1.2
-                }
-              }
-            }}
-            style={{ y: y2 }}
+            className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: isLoaded ? 0.6 : 0, y: 0 }}
+            transition={{ delay: 2, duration: 1 }}
+            style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0.6, 0]) }}
           >
-            {stats.map((stat, index) => (
+            <div className="text-white/50 text-sm mb-2">Scroll to explore</div>
+            <motion.div 
+              className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2"
+              animate={{ borderColor: ["rgba(255,255,255,0.3)", "rgba(111,207,195,0.6)", "rgba(255,255,255,0.3)"] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
               <motion.div 
-                key={index}
-                className="glass-effect-dark rounded-xl p-6 border border-white/10 hover-lift group backdrop-blur-md"
-                variants={{
-                  hidden: { opacity: 0, y: 30, scale: 0.9 },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1,
-                    transition: { 
-                      type: "spring",
-                      stiffness: 50,
-                      damping: 15,
-                      delay: 0.2 * index
-                    }
-                  }
-                }}
-                whileHover={{ 
-                  y: -10, 
-                  transition: { type: "spring", stiffness: 400, damping: 10 }
-                }}
-              >
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#6FCFC3] to-[#2A6F79]/80 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <stat.icon className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div className="text-4xl font-bold text-white mb-2 group-hover:text-[#6FCFC3] transition-colors">{stat.value}</div>
-                <p className="text-white/70 group-hover:text-white/90 transition-colors">{stat.text}</p>
-              </motion.div>
-            ))}
+                className="w-1.5 h-1.5 rounded-full bg-[#6FCFC3]"
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+              />
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

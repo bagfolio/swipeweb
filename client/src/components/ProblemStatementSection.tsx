@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageSquare, BadgeCheck, ThumbsUp, Quote, Users } from "lucide-react";
+import { MessageSquare, Quote, Users } from "lucide-react";
 import { useRef } from "react";
+import chartPath from "../assets/chart.png";
 
 export default function ProblemStatementSection() {
   // Parallax scroll effects
@@ -40,28 +41,17 @@ export default function ProblemStatementSection() {
     }
   };
   
-  // Testimonial data
+  // Streamlined testimonial data - fewer but more impactful quotes
   const testimonials = [
     {
-      quote: "I want to invest, but I don't even know where to start. Everything feels like it was designed for someone else.",
-      description: "The current investment landscape is filled with complex jargon, overwhelming choices, and tools that require expertise most of us don't have time to acquire.",
+      quote: "I want to invest, but everything feels like it was designed for someone else.",
       name: "Rachel, 24",
-      role: "Graphic Designer",
       accentColor: "from-[#6FCFC3]/80 to-[#4CB0A3]"
     },
     {
       quote: "I'm tired of being lectured about my money by people who don't understand my goals or my reality.",
-      description: "Traditional financial advice doesn't account for the economic realities, values, and priorities of younger generations facing different challenges than our parents did.",
       name: "Alex, 26",
-      role: "Software Developer",
       accentColor: "from-[#5FC0B6]/80 to-[#3A8F89]"
-    },
-    {
-      quote: "Every investing app feels like it was built by finance bros for finance bros. Where's the platform for the rest of us?",
-      description: "The investing world has been dominated by one perspective for too long. It's time for platforms that represent and understand diverse financial journeys.",
-      name: "Jordan, 22",
-      role: "Marketing Assistant",
-      accentColor: "from-[#4BA294]/80 to-[#2A6F79]"
     }
   ];
 
@@ -69,20 +59,33 @@ export default function ProblemStatementSection() {
     <section 
       id="problem-statement" 
       ref={sectionRef}
-      className="py-32 md:py-40 relative overflow-hidden dark-section"
+      className="py-28 md:py-36 relative overflow-hidden bg-[#0D1214]"
     >
       {/* Background pattern & effects */}
       <div className="absolute inset-0 opacity-30 z-0 section-pattern"></div>
       
-      {/* Animated background diagonal lines */}
+      {/* Chart background image with lower opacity */}
+      <div className="absolute inset-0 opacity-5 z-0">
+        <div 
+          className="w-full h-full bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${chartPath})`,
+            filter: "contrast(120%) brightness(60%)",
+            transform: "scale(1.2) rotate(5deg)",
+          }}
+        />
+        <div className="absolute inset-0 bg-[#0D1214]/80"></div>
+      </div>
+      
+      {/* Animated diagonal lines */}
       <svg className="absolute inset-0 w-full h-full z-0 opacity-10" viewBox="0 0 1920 1080" fill="none" preserveAspectRatio="xMidYMid slice">
-        {Array.from({ length: 8 }).map((_, i) => (
+        {Array.from({ length: 4 }).map((_, i) => (
           <motion.line
             key={i}
             x1={1920}
-            y1={100 + i * 150}
+            y1={100 + i * 200}
             x2={0}
-            y2={-200 + i * 150}
+            y2={-200 + i * 200}
             stroke="white"
             strokeWidth="1"
             initial={{ pathLength: 0, opacity: 0 }}
@@ -112,8 +115,8 @@ export default function ProblemStatementSection() {
       
       {/* Content container */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Section header */}
+        <div className="max-w-6xl mx-auto">
+          {/* Section header - more minimal and focused */}
           <motion.div
             className="text-center mb-20"
             initial={{ opacity: 0, y: 30 }}
@@ -131,36 +134,49 @@ export default function ProblemStatementSection() {
             >
               <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#6FCFC3]/20 text-[#6FCFC3] text-sm font-medium border border-[#6FCFC3]/30">
                 <Users size={14} />
-                VOICES LIKE YOURS
+                THE PROBLEM
               </span>
             </motion.div>
             
             <motion.h2 
-              className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight tracking-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white leading-tight tracking-tight"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.6 }}
             >
-              Let's be <span className="text-[#6FCFC3]">honest</span><span className="text-[#6FCFC3]">...</span>
+              Traditional Finance <span className="text-[#6FCFC3]">Wasn't Built For Us</span>
             </motion.h2>
-            
-            <motion.p 
-              className="text-xl text-white/70 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              These are the real frustrations we've heard from young investors like you. 
-              We're building Swipefolio because we've felt them too.
-            </motion.p>
           </motion.div>
           
-          {/* Testimonial cards */}
+          {/* Large central quote - focal point */}
           <motion.div 
             id="testimonials-section"
-            className="grid grid-cols-1 gap-8 lg:gap-10"
+            className="max-w-4xl mx-auto mb-24"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ 
+              duration: 0.8,
+              delay: 0.2,
+              ease: [0.22, 1, 0.36, 1]
+            }}
+          >
+            <div className="text-center">
+              <div className="inline-block mb-10 text-[#6FCFC3]/20">
+                <Quote size={60} />
+              </div>
+              <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-light italic leading-tight mb-12">
+                We're building a platform for a generation that wants investing to be <span className="text-[#6FCFC3] font-normal">meaningful</span>, <span className="text-[#6FCFC3] font-normal">intuitive</span>, and aligned with <span className="text-[#6FCFC3] font-normal">their values</span>.
+              </h3>
+              
+              <div className="h-0.5 w-24 bg-[#6FCFC3]/30 mx-auto"></div>
+            </div>
+          </motion.div>
+          
+          {/* Testimonial cards - more minimal */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10"
             variants={container}
             initial="hidden"
             whileInView="visible"
@@ -173,46 +189,26 @@ export default function ProblemStatementSection() {
                 variants={item}
                 whileHover={{ y: -8, transition: { type: "spring", stiffness: 200, damping: 20 } }}
               >
-                <div className="glass-effect-dark border border-white/10 p-0">
-                  <div className="p-8 md:p-10 relative">
-                    {/* Decorative quotes in background */}
-                    <div className="absolute top-6 right-8 text-[#4CB0A3]/10">
-                      <Quote size={120} strokeWidth={1} />
-                    </div>
+                <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative">
+                  {/* Decorative quotes in background */}
+                  <div className="absolute top-6 right-8 text-[#4CB0A3]/10">
+                    <Quote size={80} strokeWidth={1} />
+                  </div>
+                  
+                  {/* Text content - simplified */}
+                  <div className="relative z-10">
+                    <h3 className="text-xl md:text-2xl font-medium mb-6 text-white leading-relaxed group-hover:text-[#6FCFC3] transition-colors duration-300">
+                      "{testimonial.quote}"
+                    </h3>
                     
-                    {/* Card content */}
-                    <div className="relative z-10 flex flex-col md:flex-row gap-6 items-start">
-                      {/* Icon container */}
-                      <div className={`hidden md:flex shrink-0 p-4 rounded-xl bg-gradient-to-br ${testimonial.accentColor} shadow-lg transform transition-transform duration-500 group-hover:rotate-3 group-hover:scale-110`}>
-                        <MessageSquare size={32} className="text-white" />
-                      </div>
-                      
-                      {/* Text content */}
-                      <div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-white leading-tight group-hover:text-[#6FCFC3] transition-colors duration-300">
-                          "{testimonial.quote}"
-                        </h3>
-                        
-                        <p className="text-white/70 text-lg mb-8 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
-                          {testimonial.description}
-                        </p>
-                        
-                        <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${testimonial.accentColor} flex items-center justify-center shadow-md`}>
-                            <BadgeCheck size={18} className="text-white" />
-                          </div>
-                          <div>
-                            <div className="font-semibold text-white">{testimonial.name}</div>
-                            <div className="text-sm text-[#6FCFC3]">{testimonial.role}</div>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="text-[#6FCFC3]">
+                      {testimonial.name}
                     </div>
                   </div>
                   
                   {/* Animated gradient bar */}
                   <motion.div 
-                    className={`h-1 w-0 bg-gradient-to-r ${testimonial.accentColor}`}
+                    className={`absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r ${testimonial.accentColor}`}
                     initial={{ width: "0%" }}
                     whileInView={{ width: "100%" }}
                     viewport={{ once: true }}
@@ -223,38 +219,18 @@ export default function ProblemStatementSection() {
             ))}
           </motion.div>
           
-          {/* Bottom stats card */}
+          {/* Bold stat - minimal, high impact */}
           <motion.div 
-            className="mt-20 relative"
+            className="mt-24 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="glass-effect-dark rounded-xl border border-white/10 p-8 overflow-hidden relative">
-              {/* Background glow effect */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#6FCFC3]/30 blur-[60px]"></div>
-              
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-                <div className="flex items-center gap-5">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#6FCFC3] to-[#2A6F79] flex items-center justify-center shadow-lg">
-                    <ThumbsUp className="text-white h-8 w-8" />
-                  </div>
-                  
-                  <div className="text-center md:text-left">
-                    <h3 className="text-2xl text-white font-bold mb-1">Sound familiar?</h3>
-                    <p className="text-white/70 md:text-lg">
-                      You're not alone in feeling this way.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="text-center md:text-right">
-                  <div className="text-5xl font-bold gradient-text-shine mb-1">94%</div>
-                  <p className="text-white/80">of our research participants expressed similar frustrations</p>
-                </div>
-              </div>
-            </div>
+            <div className="gradient-text-shine text-6xl md:text-7xl lg:text-8xl font-bold mb-4">94%</div>
+            <p className="text-white/70 text-xl max-w-lg mx-auto">
+              of our research participants expressed similar frustrations with traditional finance
+            </p>
           </motion.div>
         </div>
       </div>
