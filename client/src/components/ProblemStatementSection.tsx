@@ -41,19 +41,20 @@ export default function ProblemStatementSection() {
     }
   };
   
-  // Streamlined testimonial data - fewer but more impactful quotes
-  const testimonials = [
-    {
-      quote: "I want to invest, but traditional platforms feel overwhelming and unnecessarily complex.",
-      name: "Rachel",
-      accentColor: "from-[#6FCFC3]/80 to-[#4CB0A3]"
-    },
-    {
-      quote: "I need clear investing options that align with my goals and values, without the finance jargon.",
-      name: "Alex",
-      accentColor: "from-[#5FC0B6]/80 to-[#3A8F89]"
+  // Enhanced animation variants with more fluid motion
+  const advancedItem = {
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 60,
+        damping: 15
+      }
     }
-  ];
+  };
 
   return (
     <section 
@@ -174,49 +175,115 @@ export default function ProblemStatementSection() {
             </div>
           </motion.div>
           
-          {/* Testimonial cards - more minimal */}
+          {/* Clean, modern feature cards with enhanced animations */}
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
             variants={container}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
-            {testimonials.map((testimonial, index) => (
-              <motion.div 
-                key={index}
-                className="rounded-2xl overflow-hidden group"
-                variants={item}
-                whileHover={{ y: -8, transition: { type: "spring", stiffness: 200, damping: 20 } }}
-              >
-                <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative">
-                  {/* Decorative quotes in background */}
-                  <div className="absolute top-6 right-8 text-[#4CB0A3]/10">
-                    <Quote size={80} strokeWidth={1} />
-                  </div>
-                  
-                  {/* Text content - simplified */}
-                  <div className="relative z-10">
-                    <h3 className="text-xl md:text-2xl font-medium mb-6 text-white leading-relaxed group-hover:text-[#6FCFC3] transition-colors duration-300">
-                      "{testimonial.quote}"
-                    </h3>
-                    
-                    <div className="text-[#6FCFC3]">
-                      {testimonial.name}
-                    </div>
-                  </div>
-                  
-                  {/* Animated gradient bar */}
-                  <motion.div 
-                    className={`absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r ${testimonial.accentColor}`}
-                    initial={{ width: "0%" }}
-                    whileInView={{ width: "100%" }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + index * 0.2, duration: 1.2 }}
-                  />
-                </div>
-              </motion.div>
-            ))}
+            {/* Feature 1 */}
+            <motion.div 
+              className="rounded-2xl overflow-hidden group"
+              variants={item}
+              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 200, damping: 20 } }}
+            >
+              <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative h-full">
+                <motion.div 
+                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#6FCFC3] to-[#2A6F79] flex items-center justify-center"
+                  whileHover={{ rotate: 5, scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <MessageSquare className="h-7 w-7 text-white" />
+                </motion.div>
+                
+                <h3 className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-colors duration-300">
+                  Simplified Communication
+                </h3>
+                
+                <p className="text-white/70 mb-4">
+                  Clear, jargon-free explanations that make finance accessible to everyone.
+                </p>
+                
+                {/* Animated gradient bar */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#6FCFC3]/80 to-[#4CB0A3]"
+                  initial={{ width: "0%" }}
+                  whileInView={{ width: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 1.2 }}
+                />
+              </div>
+            </motion.div>
+            
+            {/* Feature 2 */}
+            <motion.div 
+              className="rounded-2xl overflow-hidden group"
+              variants={item}
+              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 200, damping: 20 } }}
+            >
+              <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative h-full">
+                <motion.div 
+                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#5FC0B6]/80 to-[#3A8F89] flex items-center justify-center"
+                  whileHover={{ rotate: -5, scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Users className="h-7 w-7 text-white" />
+                </motion.div>
+                
+                <h3 className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-colors duration-300">
+                  User-Centered Design
+                </h3>
+                
+                <p className="text-white/70 mb-4">
+                  Built around how people actually think about money, not how Wall Street does.
+                </p>
+                
+                {/* Animated gradient bar */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#5FC0B6]/80 to-[#3A8F89]"
+                  initial={{ width: "0%" }}
+                  whileInView={{ width: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 1.2 }}
+                />
+              </div>
+            </motion.div>
+            
+            {/* Feature 3 */}
+            <motion.div 
+              className="rounded-2xl overflow-hidden group"
+              variants={item}
+              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 200, damping: 20 } }}
+            >
+              <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative h-full">
+                <motion.div 
+                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] flex items-center justify-center"
+                  whileHover={{ rotate: 5, scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Quote className="h-7 w-7 text-white" />
+                </motion.div>
+                
+                <h3 className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-colors duration-300">
+                  Value-Aligned Investing
+                </h3>
+                
+                <p className="text-white/70 mb-4">
+                  Investment options that reflect your principles and goals, not just returns.
+                </p>
+                
+                {/* Animated gradient bar */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79]"
+                  initial={{ width: "0%" }}
+                  whileInView={{ width: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 1.2 }}
+                />
+              </div>
+            </motion.div>
           </motion.div>
           
           {/* Bold stat - minimal, high impact */}

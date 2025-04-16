@@ -14,7 +14,7 @@ export default function VisionTeaseSection() {
   const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   
-  // Animation variants
+  // Enhanced animation variants with more fluid motion
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -34,8 +34,39 @@ export default function VisionTeaseSection() {
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 50,
+        stiffness: 60,
         damping: 15
+      }
+    }
+  };
+  
+  // New slide-in animation variants
+  const slideIn = {
+    hidden: (direction: "left" | "right") => ({
+      x: direction === "left" ? -80 : 80,
+      opacity: 0
+    }),
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 50,
+        damping: 20,
+        duration: 0.8
+      }
+    }
+  };
+  
+  // Fade in with scale animation
+  const fadeInScale = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1]
       }
     }
   };
@@ -270,41 +301,71 @@ export default function VisionTeaseSection() {
             {/* Right side showcase boxes */}
             <motion.div 
               className="md:col-span-3 relative grid grid-cols-1 sm:grid-cols-2 gap-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
             >
               {/* Features preview boxes */}
-              <div className="glass-card p-6 flex flex-col hover-lift border-[#6FCFC3]/20">
+              <motion.div 
+                className="glass-card p-6 flex flex-col hover-lift border-[#6FCFC3]/20"
+                custom="left"
+                variants={slideIn}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
                 <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 w-fit mb-4">
-                  <BrainCircuit className="h-6 w-6 text-[#2A6F79]" />
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <BrainCircuit className="h-6 w-6 text-[#2A6F79]" />
+                  </motion.div>
                 </div>
                 <h4 className="text-xl font-bold text-[#2A353A] mb-2">Smart insights</h4>
                 <p className="text-[#2A353A]/60 text-sm">
                   Personalized guidance that adapts to your goals and risk tolerance.
                 </p>
-              </div>
+              </motion.div>
               
-              <div className="glass-card p-6 flex flex-col hover-lift sm:mt-10 border-[#6FCFC3]/20">
+              <motion.div 
+                className="glass-card p-6 flex flex-col hover-lift sm:mt-10 border-[#6FCFC3]/20"
+                custom="right"
+                variants={slideIn}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
                 <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 w-fit mb-4">
-                  <TrendingUp className="h-6 w-6 text-[#2A6F79]" />
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <TrendingUp className="h-6 w-6 text-[#2A6F79]" />
+                  </motion.div>
                 </div>
                 <h4 className="text-xl font-bold text-[#2A353A] mb-2">Value alignment</h4>
                 <p className="text-[#2A353A]/60 text-sm">
                   Invest in what matters to you while growing your wealth responsibly.
                 </p>
-              </div>
+              </motion.div>
               
-              <div className="glass-card p-6 flex flex-col hover-lift sm:mt-4 border-[#6FCFC3]/20">
+              <motion.div 
+                className="glass-card p-6 flex flex-col hover-lift sm:mt-4 border-[#6FCFC3]/20"
+                custom="left"
+                variants={slideIn}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
                 <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 w-fit mb-4">
-                  <LightbulbIcon className="h-6 w-6 text-[#2A6F79]" />
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <LightbulbIcon className="h-6 w-6 text-[#2A6F79]" />
+                  </motion.div>
                 </div>
                 <h4 className="text-xl font-bold text-[#2A353A] mb-2">Decision clarity</h4>
                 <p className="text-[#2A353A]/60 text-sm">
                   Clear explanations that help you understand the 'why' behind each move.
                 </p>
-              </div>
+              </motion.div>
               
               {/* Animated hint */}
               <motion.div 

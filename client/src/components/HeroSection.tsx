@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import logoPath from "../assets/logo.png";
 import chartPath from "../assets/bluechart.png";
 
 export default function HeroSection() {
@@ -149,25 +148,27 @@ export default function HeroSection() {
           }}
           style={{ opacity }}
         >
-          {/* Logo display with animation */}
+          {/* Enhanced animated badge */}
           <motion.div
-            className="mb-12 w-full max-w-[280px]"
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="mb-12"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 1.2, 
+              duration: 1, 
               delay: 0.4,
               ease: [0.22, 1, 0.36, 1]
             }}
           >
-            <img 
-              src={logoPath} 
-              alt="Swipefolio" 
-              className="w-full h-auto"
-              style={{
-                filter: "drop-shadow(0 8px 20px rgba(111, 207, 195, 0.3))"
+            <motion.div 
+              className="px-6 py-2 rounded-full bg-[#6FCFC3]/10 border border-[#6FCFC3]/30 text-[#6FCFC3] font-medium"
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(111, 207, 195, 0.3)"
               }}
-            />
+              transition={{ duration: 0.3 }}
+            >
+              SWIPEFOLIO
+            </motion.div>
           </motion.div>
           
           {/* Hero heading - much more minimal */}
