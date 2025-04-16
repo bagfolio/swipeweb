@@ -1,294 +1,281 @@
-import { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { waitlistFormSchema } from "@/lib/schema";
-import { useToast } from "@/hooks/use-toast";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { apiRequest } from "@/lib/queryClient";
-import { type z } from "zod";
 import { 
   ArrowRight, 
-  CheckCircle, 
-  Shield, 
   Mail, 
-  Zap 
+  Shield,
+  CheckCircle
 } from "lucide-react";
-import chartPath from "../assets/bluechart.png";
 
-type FormValues = z.infer<typeof waitlistFormSchema>;
+// Import chart image
+import chartPath from "../assets/chart-pattern.svg";
 
 export default function WaitlistSection() {
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
   
-  // Parallax scroll effects
+  const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
   
-  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(waitlistFormSchema),
-    defaultValues: {
-      email: "",
+  // Simple parallax effect
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  
+  // Form validation
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
       firstName: "",
-      lastName: ""
-    } as FormValues,
-  });
-
-  async function onSubmit(data: FormValues) {
-    setIsSubmitting(true);
-    try {
-      await apiRequest("POST", "/api/waitlist", data);
-      toast({
-        title: "You're in!",
-        description: "Thanks for joining our waitlist. We'll be in touch soon.",
-        variant: "default",
-      });
-      setIsSuccessful(true);
-      form.reset();
-    } catch (error) {
-      toast({
-        title: "Something went wrong.",
-        description: error instanceof Error ? error.message : "Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+      lastName: "",
+      email: "",
+    };
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First name is required";
+      valid = false;
     }
-  }
+    
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last name is required";
+      valid = false;
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+      valid = false;
+    }
+    
+    setErrors(newErrors);
+    return valid;
+  };
+
+  // Handle form input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Form submission handler
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      setIsSubmitting(true);
+      
+      // Simulate API call
+      setTimeout(() => {
+        console.log(formData);
+        setIsSubmitting(false);
+        setIsSuccessful(true);
+      }, 1500);
+    }
+  };
+
+  // Reset form
+  const resetForm = () => {
+    setIsSuccessful(false);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+    });
+    setErrors({
+      firstName: "",
+      lastName: "",
+      email: "",
+    });
+  };
 
   return (
     <section 
       id="waitlist" 
       ref={sectionRef}
-      className="py-24 md:py-32 bg-[#0D1214] relative overflow-hidden"
+      className="py-28 md:py-36 lg:py-40 relative overflow-hidden bg-[#0F1214]"
     >
-      {/* Chart background image with overlay */}
-      <div className="absolute inset-0 opacity-5 z-0">
-        <div 
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${chartPath})`,
-            filter: "contrast(120%) brightness(50%)",
-            transform: "rotate(-3deg) scale(1.1)",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1214] via-transparent to-[#0D1214]/90"></div>
+      {/* Clean background pattern */}
+      <div className="absolute inset-0 opacity-10 z-0">
+        <div className="w-full h-full" style={{
+          backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)",
+          backgroundSize: "30px 30px"
+        }}></div>
       </div>
-      
-      {/* Light pulse effect */}
-      <motion.div
-        className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full bg-[#6FCFC3]/5 blur-[100px]"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ 
-          duration: 6,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }}
-      />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto">
-          {/* Section header - minimal */}
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            style={{ opacity }}
-          >
-            <motion.h2 
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white tracking-tight"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              Join the <span className="text-[#6FCFC3]">Waitlist</span>
-            </motion.h2>
-            
-            <motion.div 
-              className="h-1 w-20 bg-[#6FCFC3]/30 mx-auto mb-10"
-              initial={{ width: 0 }}
-              whileInView={{ width: 80 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 1 }}
-            />
-          </motion.div>
-          
-          <motion.div
-            className="relative z-10 glass-effect-dark border border-white/10 p-10 md:p-14 rounded-2xl shadow-xl backdrop-blur-md overflow-hidden"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            style={{ y: y1 }}
-          >
-            {/* Background glow */}
-            <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#4CB0A3]/10 blur-[100px]"></div>
-            <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full bg-[#2A6F79]/10 blur-[80px]"></div>
-            
-            <div className="relative z-10">
-              {isSuccessful ? (
-                <motion.div 
-                  className="text-center py-8"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                >
-                  <div className="mb-8 inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-r from-[#6FCFC3] to-[#2A6F79] text-white shadow-lg">
-                    <CheckCircle size={48} />
-                  </div>
-                  <h3 className="text-4xl font-bold mb-6 text-white">You're on the list!</h3>
-                  <p className="text-white/80 text-xl mb-12 max-w-lg mx-auto">
-                    We'll be in touch soon with updates and early access information.
-                  </p>
-                  <Button
-                    onClick={() => setIsSuccessful(false)}
-                    className="px-8 py-6 bg-[#36444C] hover:bg-[#2D3A42] text-white rounded-lg text-lg font-medium border border-white/10"
-                  >
-                    <span className="flex items-center">
-                      Add another email
-                      <Zap className="ml-2 h-5 w-5 text-[#6FCFC3]" />
-                    </span>
-                  </Button>
-                </motion.div>
-              ) : (
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="flex flex-col space-y-8">
-                      {/* Name fields row */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="firstName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  placeholder="First Name"
-                                  className="py-6 rounded-xl text-white bg-[#212C32] border-[#36444C]/50 focus-visible:ring-[#6FCFC3] focus-visible:border-[#6FCFC3] h-auto placeholder:text-white/50 text-lg"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage className="text-[#FF6B6B] mt-1 ml-1" />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        <FormField
-                          control={form.control}
-                          name="lastName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  placeholder="Last Name"
-                                  className="py-6 rounded-xl text-white bg-[#212C32] border-[#36444C]/50 focus-visible:ring-[#6FCFC3] focus-visible:border-[#6FCFC3] h-auto placeholder:text-white/50 text-lg"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage className="text-[#FF6B6B] mt-1 ml-1" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      
-                      {/* Email field */}
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem className="w-full">
-                            <FormControl>
-                              <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#6FCFC3]" />
-                                <Input
-                                  placeholder="Your email address"
-                                  className="pl-12 py-6 rounded-xl text-white bg-[#212C32] border-[#36444C]/50 focus-visible:ring-[#6FCFC3] focus-visible:border-[#6FCFC3] h-auto placeholder:text-white/50 text-lg"
-                                  {...field}
-                                />
-                              </div>
-                            </FormControl>
-                            <FormMessage className="text-[#FF6B6B] mt-2 ml-1" />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      {/* Submit button - clean and minimal */}
-                      <motion.button 
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="relative w-full py-6 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] text-white rounded-xl text-lg font-medium shadow-xl overflow-hidden mt-4"
-                        whileHover={{ 
-                          scale: 1.01,
-                          boxShadow: "0 15px 30px -5px rgba(42, 111, 121, 0.5)"
-                        }}
-                        whileTap={{ scale: 0.99 }}
-                      >
-                        {isSubmitting ? (
-                          <span className="flex items-center justify-center">
-                            <span className="h-5 w-5 border-t-2 border-r-2 border-white rounded-full animate-spin mr-2" />
-                            Processing...
-                          </span>
-                        ) : (
-                          <span className="flex items-center justify-center">
-                            Join Waitlist
-                            <ArrowRight size={18} className="ml-2" />
-                          </span>
-                        )}
-                        
-                        {/* Subtle glow effect */}
-                        <motion.span 
-                          className="absolute inset-0"
-                          animate={{ 
-                            boxShadow: ["0 0 0px rgba(111, 207, 195, 0)", "0 0 20px rgba(111, 207, 195, 0.3)", "0 0 0px rgba(111, 207, 195, 0)"]
-                          }}
-                          transition={{ 
-                            repeat: Infinity,
-                            duration: 3,
-                            ease: "easeInOut"
-                          }}
-                        />
-                      </motion.button>
-                      
-                      {/* Privacy note - small and unobtrusive */}
-                      <div className="flex items-center justify-center text-sm text-white/60 gap-2 pt-2">
-                        <Shield size={14} className="text-[#6FCFC3]" />
-                        <span>No spam. Your information is secure and never shared.</span>
-                      </div>
-                    </div>
-                  </form>
-                </Form>
-              )}
-            </div>
-          </motion.div>
-          
-          {/* Minimal counter at bottom */}
-          <motion.div 
-            className="mt-16 text-center"
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="text-center mb-16">
+          <motion.h2 
+            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white tracking-tight font-poppins"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">1,275+</div>
-            <div className="text-[#6FCFC3]">PEOPLE ALREADY JOINED</div>
-          </motion.div>
+            Join the <span className="text-[#4CB0A3]">Waitlist</span>
+          </motion.h2>
+          
+          <motion.div 
+            className="h-1 w-20 bg-[#4CB0A3]/30 mx-auto mb-10 rounded-full"
+            initial={{ width: 0 }}
+            whileInView={{ width: 80 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          />
         </div>
+
+        {/* Waitlist form container */}
+        <motion.div
+          className="relative z-10 bg-[#151A1D] p-10 md:p-14 rounded-xl shadow-lg max-w-2xl mx-auto overflow-hidden border border-white/10"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          style={{ y: y1 }}
+        >
+          {isSuccessful ? (
+            // Success state
+            <div className="text-center py-8">
+              <motion.div 
+                className="mb-8 inline-flex items-center justify-center w-24 h-24 rounded-full bg-[#4CB0A3] text-white"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              >
+                <CheckCircle size={48} />
+              </motion.div>
+              
+              <motion.h3 
+                className="text-4xl font-bold mb-6 text-white font-poppins"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                You're on the list!
+              </motion.h3>
+              
+              <motion.p 
+                className="text-white/80 text-xl mb-10 max-w-lg mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                We'll be in touch soon with updates and early access information.
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <button
+                  onClick={resetForm}
+                  className="px-8 py-3 bg-[#2A353A] hover:bg-[#36444C] text-white rounded-lg text-lg font-medium transition-colors duration-200"
+                >
+                  Add another email
+                </button>
+              </motion.div>
+            </div>
+          ) : (
+            // Form state
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name fields row */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full py-6 rounded-lg text-white bg-[#1A2227] border border-[#2A353A] focus:ring-2 focus:ring-[#4CB0A3] focus:border-[#4CB0A3] h-auto placeholder:text-white/50 text-lg px-4 outline-none transition-all duration-200"
+                  />
+                  {errors.firstName && <p className="text-[#FF6B6B] mt-1 ml-1 text-sm">{errors.firstName}</p>}
+                </div>
+                
+                <div>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full py-6 rounded-lg text-white bg-[#1A2227] border border-[#2A353A] focus:ring-2 focus:ring-[#4CB0A3] focus:border-[#4CB0A3] h-auto placeholder:text-white/50 text-lg px-4 outline-none transition-all duration-200"
+                  />
+                  {errors.lastName && <p className="text-[#FF6B6B] mt-1 ml-1 text-sm">{errors.lastName}</p>}
+                </div>
+              </div>
+              
+              {/* Email field */}
+              <div>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#4CB0A3]" />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your email address"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full pl-12 py-6 rounded-lg text-white bg-[#1A2227] border border-[#2A353A] focus:ring-2 focus:ring-[#4CB0A3] focus:border-[#4CB0A3] h-auto placeholder:text-white/50 text-lg px-4 outline-none transition-all duration-200"
+                  />
+                </div>
+                {errors.email && <p className="text-[#FF6B6B] mt-1 ml-1 text-sm">{errors.email}</p>}
+              </div>
+              
+              {/* Submit button */}
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-5 bg-[#4CB0A3] hover:bg-[#3D9C90] text-white rounded-lg text-lg font-medium mt-4 transition-colors duration-200 disabled:opacity-70"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Processing...
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center">
+                    Join Waitlist
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </span>
+                )}
+              </button>
+              
+              {/* Privacy note */}
+              <div className="flex items-center justify-center text-sm text-white/60 gap-2 pt-2 mt-2">
+                <Shield size={14} className="text-[#4CB0A3]" />
+                <span>No spam. Your information is secure and never shared.</span>
+              </div>
+            </form>
+          )}
+        </motion.div>
+        
+        {/* Counter */}
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          <div className="text-3xl md:text-4xl font-bold text-white mb-2 font-poppins">1,275+</div>
+          <div className="text-[#4CB0A3] font-medium tracking-wider">PEOPLE ALREADY JOINED</div>
+        </motion.div>
       </div>
     </section>
   );
