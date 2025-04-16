@@ -100,10 +100,42 @@ export default function VisionTeaseSection() {
     <section 
       id="vision-tease" 
       ref={sectionRef}
-      className="py-28 md:py-36 relative overflow-hidden bg-gradient-to-b from-[#FAFBFC] to-[#F5F7FA]"
+      className="pt-40 pb-28 md:pt-48 md:pb-36 relative overflow-hidden bg-gradient-to-b from-[#FAFBFC] to-[#F5F7FA]"
     >
-      {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#E1E4E8] to-transparent opacity-30"></div>
+      {/* Smooth theme transition gradient overlay */}
+      <div className="absolute top-0 left-0 right-0 h-72 bg-gradient-to-b from-[#0D1214] via-[#12191B]/50 to-transparent -z-0" />
+      
+      {/* Diagonal dividing line to create visual continuity */}
+      <motion.div 
+        className="absolute top-0 left-0 w-full h-full opacity-20 z-0"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.2 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5 }}
+      >
+        <svg className="w-full h-72 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
+          <motion.path 
+            d="M0,0 L100,30 L100,0 L0,0 Z" 
+            fill="#0D1214" 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+          />
+          <motion.path 
+            d="M0,0 L100,30 L100,100 L0,100 Z" 
+            fill="none" 
+            stroke="#2A6F79"
+            strokeWidth="0.2"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, delay: 0.5 }}
+          />
+        </svg>
+      </motion.div>
+      
+      {/* Background elements - with adjusted position to account for transition area */}
+      <div className="absolute top-72 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#E1E4E8] to-transparent opacity-30"></div>
       
       {/* Animated grid pattern background */}
       <div className="absolute inset-0 opacity-[0.03] z-0">
@@ -198,21 +230,33 @@ export default function VisionTeaseSection() {
                 {/* Card background glow effect */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor} rounded-2xl transform transition-all duration-500 opacity-80 group-hover:opacity-100 group-hover:scale-[1.03] -z-10`} />
                 
-                {/* Card content */}
-                <div className="feature-card h-full flex flex-col p-8 md:p-10">
-                  {/* Icon with animated gradient */}
-                  <div className="relative mb-6">
-                    <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl`}>
-                      <feature.icon className="h-8 w-8 text-white" />
+                {/* Card content with enhanced styling and effects */}
+                <div className="feature-card h-full flex flex-col p-8 md:p-10 backdrop-blur-sm bg-white/90 rounded-2xl border border-[#6FCFC3]/20 shadow-lg shadow-[#6FCFC3]/5 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-[#6FCFC3]/10 group-hover:bg-white group-hover:border-[#6FCFC3]/30">
+                  {/* Icon with enhanced animated gradient */}
+                  <div className="relative mb-8">
+                    <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:rounded-[22px]`}>
+                      <motion.div
+                        animate={{ 
+                          rotate: [0, 5, 0, -5, 0],
+                          scale: [1, 1.05, 1, 1.05, 1]
+                        }}
+                        transition={{ 
+                          duration: 6, 
+                          repeat: Infinity,
+                          delay: index * 1.5
+                        }}
+                      >
+                        <feature.icon className="h-10 w-10 text-white" />
+                      </motion.div>
                     </div>
                     
-                    {/* Animated glow effect */}
+                    {/* Enhanced animated glow effect */}
                     <motion.div 
-                      className="absolute inset-0 rounded-full"
+                      className="absolute inset-0 rounded-2xl"
                       animate={{ 
                         boxShadow: [
                           `0 0 0 rgba(111, 207, 195, 0)`,
-                          `0 0 20px rgba(111, 207, 195, 0.5)`,
+                          `0 0 30px rgba(111, 207, 195, 0.6)`,
                           `0 0 0 rgba(111, 207, 195, 0)`
                         ]
                       }}
@@ -222,165 +266,236 @@ export default function VisionTeaseSection() {
                         delay: index * 0.5
                       }}
                     />
+                    
+                    {/* Subtle floating background element */}
+                    <div className="absolute -z-10 -right-4 -bottom-4 w-16 h-16 rounded-full bg-gradient-to-br from-[#6FCFC3]/10 to-[#2A6F79]/5 blur-sm floating-element-slow"></div>
                   </div>
                   
-                  {/* Title and description */}
-                  <h3 className="text-2xl font-bold mb-4 text-[#2A353A] group-hover:text-[#2A6F79] transition-colors duration-300">
+                  {/* Title and description with enhanced typography */}
+                  <motion.h3 
+                    className="text-2xl md:text-3xl font-bold mb-5 text-[#2A353A] group-hover:text-[#2A6F79] transition-colors duration-300"
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     {feature.title}
-                  </h3>
+                  </motion.h3>
                   
-                  <p className="text-[#2A353A]/80 text-lg leading-relaxed flex-grow mb-6">
+                  <p className="text-[#2A353A]/80 text-lg leading-relaxed flex-grow mb-8 group-hover:text-[#2A353A]/90 transition-colors duration-300">
                     {feature.description}
                   </p>
                   
-                  {/* Learn more link */}
+                  {/* Enhanced learn more button */}
                   <motion.div 
-                    className="flex items-center text-[#4CB0A3] font-medium group-hover:text-[#2A6F79]"
-                    initial={{ opacity: 0.8 }}
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.3 }}
+                    className="flex items-center text-[#4CB0A3] font-medium px-4 py-2 rounded-lg bg-[#6FCFC3]/10 w-fit group-hover:bg-[#6FCFC3]/20 transition-colors duration-300"
+                    whileHover={{ 
+                      x: 5, 
+                      backgroundColor: "rgba(111, 207, 195, 0.2)",
+                      transition: { duration: 0.2 }
+                    }}
                   >
-                    Learn more
-                    <ArrowUpRight className="ml-1 h-4 w-4" />
+                    <span>Learn more</span>
+                    <motion.div
+                      animate={{ x: [0, 3, 0] }}
+                      transition={{ 
+                        duration: 1.5, 
+                        repeat: Infinity,
+                        repeatType: "loop"
+                      }}
+                    >
+                      <ArrowUpRight className="ml-2 h-5 w-5" />
+                    </motion.div>
                   </motion.div>
                   
-                  {/* Animated progress bar */}
+                  {/* Animated accent line with enhanced visual */}
                   <motion.div 
-                    className={`h-1 w-0 bg-gradient-to-r ${feature.color} mt-6 rounded-full`}
+                    className={`h-1.5 w-0 bg-gradient-to-r ${feature.color} mt-8 rounded-full`}
                     initial={{ width: "0%" }}
                     whileInView={{ width: "100%" }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 + index * 0.2, duration: 1 }}
+                    transition={{ delay: 0.3 + index * 0.2, duration: 1.2 }}
                   />
                 </div>
               </motion.div>
             ))}
           </motion.div>
           
-          {/* Bottom showcase section */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mt-12 items-center">
-            {/* Left side text */}
-            <motion.div 
-              className="md:col-span-2 lg:pr-12"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <span className="inline-block px-4 py-1 rounded-full bg-[#2A6F79]/10 text-[#2A6F79] font-medium text-sm mb-4">
-                COMING SOON
-              </span>
-              
-              <h3 className="text-2xl md:text-3xl font-bold text-[#2A353A] mb-5 leading-tight">
-                Where finance meets your life, not the other way around
-              </h3>
-              
-              <p className="text-[#2A353A]/70 text-lg mb-8">
-                We're reimagining what investing can be when it's built for your generation from the ground up.
-              </p>
-              
-              <motion.button
-                className="btn-secondary flex items-center gap-2 group"
-                whileHover={{ 
-                  scale: 1.03,
-                  boxShadow: "0 8px 30px rgba(76, 176, 163, 0.2)" 
-                }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span>Get early access</span>
-                <motion.div
-                  initial={{ x: 0 }}
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ArrowUpRight className="h-4 w-4 text-[#2A6F79]" />
-                </motion.div>
-              </motion.button>
-            </motion.div>
+          {/* Visually distinct "Coming Soon" section - fixes hierarchy confusion */}
+          <motion.div 
+            className="mt-28 relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#F0F7F6] to-[#E7F3F2] border border-[#6FCFC3]/20"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#6FCFC3]/10 to-[#2A6F79]/5 rounded-full blur-[80px] -z-10" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-[#4CB0A3]/10 to-[#2A6F79]/5 rounded-full blur-[100px] -z-10" />
             
-            {/* Right side showcase boxes */}
-            <motion.div 
-              className="md:col-span-3 relative grid grid-cols-1 sm:grid-cols-2 gap-6"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-            >
-              {/* Features preview boxes */}
-              <motion.div 
-                className="glass-card p-6 flex flex-col hover-lift border-[#6FCFC3]/20"
-                custom="left"
-                variants={slideIn}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              >
-                <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 w-fit mb-4">
+            <div className="p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              {/* Left side - text content with enhanced styling */}
+              <div>
+                <motion.div 
+                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#2A6F79]/10 text-[#2A6F79] font-medium text-sm mb-6 border border-[#2A6F79]/20"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <Sparkles size={16} className="mr-1" />
+                  COMING SOON
+                </motion.div>
+                
+                <motion.h3 
+                  className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2A353A] mb-6 leading-tight"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  Where finance meets your life, <span className="text-[#2A6F79]">not the other way around</span>
+                </motion.h3>
+                
+                <motion.p 
+                  className="text-[#2A353A]/80 text-lg leading-relaxed mb-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  We're reimagining what investing can be when it's built for your generation from the ground up.
+                </motion.p>
+                
+                <motion.button
+                  className="px-6 py-3 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] text-white rounded-lg font-medium shadow-lg shadow-[#2A6F79]/20 flex items-center gap-2"
+                  whileHover={{ 
+                    scale: 1.03,
+                    boxShadow: "0 10px 30px rgba(42, 111, 121, 0.3)" 
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  <span>Get early access</span>
                   <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.8, type: "spring" }}
+                    initial={{ x: 0 }}
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity,
+                      repeatType: "loop" 
+                    }}
                   >
-                    <BrainCircuit className="h-6 w-6 text-[#2A6F79]" />
+                    <ArrowUpRight className="h-5 w-5" />
                   </motion.div>
-                </div>
-                <h4 className="text-xl font-bold text-[#2A353A] mb-2">Smart insights</h4>
-                <p className="text-[#2A353A]/60 text-sm">
-                  Personalized guidance that adapts to your goals and risk tolerance.
-                </p>
-              </motion.div>
+                </motion.button>
+              </div>
               
+              {/* Right side - feature overview with list instead of cards */}
               <motion.div 
-                className="glass-card p-6 flex flex-col hover-lift sm:mt-10 border-[#6FCFC3]/20"
-                custom="right"
-                variants={slideIn}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className="relative"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 w-fit mb-4">
-                  <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.8, type: "spring" }}
-                  >
-                    <TrendingUp className="h-6 w-6 text-[#2A6F79]" />
-                  </motion.div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-[#6FCFC3]/20 p-8 shadow-xl">
+                  <h4 className="text-xl font-bold text-[#2A353A] mb-6 flex items-center">
+                    <motion.div 
+                      className="bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] w-8 h-8 rounded-lg mr-3 flex items-center justify-center text-white"
+                      animate={{ rotate: [0, 5, 0, -5, 0] }}
+                      transition={{ duration: 6, repeat: Infinity }}
+                    >
+                      <Sparkles size={16} />
+                    </motion.div>
+                    Key Platform Features
+                  </h4>
+                  
+                  {/* Feature list instead of separate cards */}
+                  <ul className="space-y-6">
+                    <motion.li 
+                      className="flex gap-4"
+                      variants={fadeInScale}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 h-fit">
+                        <BrainCircuit className="h-6 w-6 text-[#2A6F79]" />
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-[#2A353A] mb-1">Smart insights</h5>
+                        <p className="text-[#2A353A]/70 text-sm">
+                          Personalized guidance that adapts to your goals and risk tolerance.
+                        </p>
+                      </div>
+                    </motion.li>
+                    
+                    <motion.li 
+                      className="flex gap-4"
+                      variants={fadeInScale}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 h-fit">
+                        <TrendingUp className="h-6 w-6 text-[#2A6F79]" />
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-[#2A353A] mb-1">Value alignment</h5>
+                        <p className="text-[#2A353A]/70 text-sm">
+                          Invest in what matters to you while growing your wealth responsibly.
+                        </p>
+                      </div>
+                    </motion.li>
+                    
+                    <motion.li 
+                      className="flex gap-4"
+                      variants={fadeInScale}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 h-fit">
+                        <LightbulbIcon className="h-6 w-6 text-[#2A6F79]" />
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-[#2A353A] mb-1">Decision clarity</h5>
+                        <p className="text-[#2A353A]/70 text-sm">
+                          Clear explanations that help you understand the 'why' behind each move.
+                        </p>
+                      </div>
+                    </motion.li>
+                  </ul>
+                  
+                  {/* Animated decorative line */}
+                  <motion.div 
+                    className="h-1 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] rounded-full mt-6"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                  />
                 </div>
-                <h4 className="text-xl font-bold text-[#2A353A] mb-2">Value alignment</h4>
-                <p className="text-[#2A353A]/60 text-sm">
-                  Invest in what matters to you while growing your wealth responsibly.
-                </p>
+                
+                {/* Decorative elements */}
+                <motion.div 
+                  className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-gradient-to-br from-[#6FCFC3]/30 to-[#4CB0A3]/20 blur-sm floating-element-slow"
+                  animate={{ scale: [1, 1.1, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                <motion.div 
+                  className="absolute -bottom-6 -left-6 w-16 h-16 rounded-full bg-gradient-to-br from-[#2A6F79]/30 to-[#4CB0A3]/20 blur-sm floating-element"
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+                  transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                />
               </motion.div>
-              
-              <motion.div 
-                className="glass-card p-6 flex flex-col hover-lift sm:mt-4 border-[#6FCFC3]/20"
-                custom="left"
-                variants={slideIn}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              >
-                <div className="bg-gradient-to-br from-[#4CB0A3]/20 to-[#2A6F79]/10 rounded-lg p-3 w-fit mb-4">
-                  <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.8, type: "spring" }}
-                  >
-                    <LightbulbIcon className="h-6 w-6 text-[#2A6F79]" />
-                  </motion.div>
-                </div>
-                <h4 className="text-xl font-bold text-[#2A353A] mb-2">Decision clarity</h4>
-                <p className="text-[#2A353A]/60 text-sm">
-                  Clear explanations that help you understand the 'why' behind each move.
-                </p>
-              </motion.div>
-              
-              {/* Animated hint */}
-              <motion.div 
-                className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-gradient-to-br from-[#6FCFC3]/20 to-[#2A6F79]/10 blur-[60px] pulsing-element"
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 4
-                }}
-              />
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
