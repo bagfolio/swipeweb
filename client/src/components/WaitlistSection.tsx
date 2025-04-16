@@ -41,7 +41,7 @@ export default function WaitlistSection() {
       email: "",
       firstName: "",
       lastName: ""
-    },
+    } as FormValues,
   });
 
   async function onSubmit(data: FormValues) {

@@ -6,4 +6,6 @@ export const waitlistFormSchema = insertWaitlistSubscriberSchema.extend({
     .string()
     .min(1, "Email is required")
     .email("Please enter a valid email address"),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
 });

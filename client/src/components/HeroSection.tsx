@@ -176,14 +176,14 @@ export default function HeroSection() {
             variants={fadeInUp}
             style={{ y: y1 }}
           >
-            <span className="block">Modern Investing</span>
+            <span className="block">Investing Made</span>
             <motion.span 
               className="text-[#6FCFC3] relative inline-block mt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
-              <span className="relative z-10">For Your Generation</span>
+              <span className="relative z-10">Clear & Intuitive</span>
               <motion.span 
                 className="absolute -bottom-2 md:-bottom-3 left-0 w-full h-2 md:h-2.5 bg-[#4CB0A3] opacity-40 z-0 rounded"
                 initial={{ width: 0 }}
@@ -199,7 +199,7 @@ export default function HeroSection() {
             variants={fadeInUp}
             style={{ y: y1 }}
           >
-            No jargon. Just clarity, meaning, and control.
+            Take control of your financial future with confidence.
           </motion.p>
           
           {/* Call to action buttons */}

@@ -44,13 +44,13 @@ export default function ProblemStatementSection() {
   // Streamlined testimonial data - fewer but more impactful quotes
   const testimonials = [
     {
-      quote: "I want to invest, but everything feels like it was designed for someone else.",
-      name: "Rachel, 24",
+      quote: "I want to invest, but traditional platforms feel overwhelming and unnecessarily complex.",
+      name: "Rachel",
       accentColor: "from-[#6FCFC3]/80 to-[#4CB0A3]"
     },
     {
-      quote: "I'm tired of being lectured about my money by people who don't understand my goals or my reality.",
-      name: "Alex, 26",
+      quote: "I need clear investing options that align with my goals and values, without the finance jargon.",
+      name: "Alex",
       accentColor: "from-[#5FC0B6]/80 to-[#3A8F89]"
     }
   ];
@@ -145,7 +145,7 @@ export default function ProblemStatementSection() {
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.6 }}
             >
-              Traditional Finance <span className="text-[#6FCFC3]">Wasn't Built For Us</span>
+              Traditional Finance <span className="text-[#6FCFC3]">Needs Reinvention</span>
             </motion.h2>
           </motion.div>
           
@@ -167,7 +167,7 @@ export default function ProblemStatementSection() {
                 <Quote size={60} />
               </div>
               <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-light italic leading-tight mb-12">
-                We're building a platform for a generation that wants investing to be <span className="text-[#6FCFC3] font-normal">meaningful</span>, <span className="text-[#6FCFC3] font-normal">intuitive</span>, and aligned with <span className="text-[#6FCFC3] font-normal">their values</span>.
+                We're building a platform that makes investing <span className="text-[#6FCFC3] font-normal">meaningful</span>, <span className="text-[#6FCFC3] font-normal">intuitive</span>, and aligned with <span className="text-[#6FCFC3] font-normal">your values</span>.
               </h3>
               
               <div className="h-0.5 w-24 bg-[#6FCFC3]/30 mx-auto"></div>
