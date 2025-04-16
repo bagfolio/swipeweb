@@ -13,7 +13,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const data = insertWaitlistSubscriberSchema.parse(req.body);
       
       // Check if email already exists
-      const existingSubscriber = await storage.getSubscriberByEmail(data.email);
+      const existingSubscriber = await storage.getWaitlistSubscriberByEmail(data.email);
       
       if (existingSubscriber) {
         return res.status(409).json({ 
@@ -22,7 +22,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Store the subscriber
-      const subscriber = await storage.createSubscriber(data);
+      const subscriber = await storage.createWaitlistSubscriber(data);
       
       return res.status(201).json({
         message: "Successfully joined the waitlist!",
