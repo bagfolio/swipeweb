@@ -150,10 +150,10 @@ export default function ProblemStatementSection() {
             </motion.h2>
           </motion.div>
           
-          {/* Large central quote - focal point */}
+          {/* Redesigned central quote - with more visual distinctiveness */}
           <motion.div 
             id="testimonials-section"
-            className="max-w-4xl mx-auto mb-24"
+            className="max-w-4xl mx-auto mb-24 relative"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -163,16 +163,92 @@ export default function ProblemStatementSection() {
               ease: [0.22, 1, 0.36, 1]
             }}
           >
-            <div className="text-center">
-              <div className="inline-block mb-10 text-[#6FCFC3]/20">
-                <Quote size={60} />
+            {/* Background elements */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0F1C1E]/80 to-[#162426]/60 -z-10 scale-105 transform rotate-1 blur-sm" />
+            <div className="absolute inset-0 rounded-2xl border border-[#6FCFC3]/10 -z-10" />
+            
+            {/* Content container with left-border accent */}
+            <div className="relative py-12 px-8 md:px-16 rounded-2xl bg-[#12191B]/90 border-l-4 border-[#6FCFC3]">
+              {/* Accent elements */}
+              <div className="absolute -top-6 -left-6">
+                <motion.div 
+                  className="p-3 rounded-full bg-[#0D1214] border border-[#6FCFC3]/30 text-[#6FCFC3]"
+                  initial={{ rotate: -10 }}
+                  whileInView={{ rotate: 0 }}
+                  transition={{ 
+                    duration: 0.8,
+                    delay: 0.5,
+                    type: "spring"
+                  }}
+                >
+                  <Quote size={30} />
+                </motion.div>
               </div>
-              <h3 className="text-3xl md:text-4xl lg:text-5xl text-white font-light italic leading-tight mb-12">
-                We're building a platform that makes investing <span className="text-[#6FCFC3] font-normal">meaningful</span>, <span className="text-[#6FCFC3] font-normal">intuitive</span>, and aligned with <span className="text-[#6FCFC3] font-normal">your values</span>.
-              </h3>
               
-              <div className="h-0.5 w-24 bg-[#6FCFC3]/30 mx-auto"></div>
+              <motion.div
+                className="relative z-10"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-light leading-tight mb-8 md:leading-relaxed">
+                  We're building a platform that makes investing <motion.span 
+                    className="text-[#6FCFC3] font-normal relative inline-block"
+                    whileInView={{
+                      color: ["#6FCFC3", "#4CB0A3", "#6FCFC3"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                  >meaningful</motion.span>, <motion.span 
+                    className="text-[#6FCFC3] font-normal relative inline-block"
+                    whileInView={{
+                      color: ["#6FCFC3", "#4CB0A3", "#6FCFC3"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: 0.5
+                    }}
+                  >intuitive</motion.span>, and aligned with <motion.span 
+                    className="text-[#6FCFC3] font-normal relative inline-block"
+                    whileInView={{
+                      color: ["#6FCFC3", "#4CB0A3", "#6FCFC3"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: 1
+                    }}
+                  >your values</motion.span>.
+                </h3>
+              </motion.div>
+              
+              {/* Bottom highlight bar with animation */}
+              <motion.div 
+                className="h-0.5 bg-gradient-to-r from-[#6FCFC3]/20 via-[#6FCFC3]/80 to-[#6FCFC3]/20 w-0"
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+              />
             </div>
+            
+            {/* Decoration elements */}
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-[#6FCFC3]/5 blur-[60px] pulsing-element" />
+            <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-[#6FCFC3]/5 blur-[60px] pulsing-element" />
           </motion.div>
           
           {/* Clean, modern feature cards with enhanced animations */}
@@ -183,104 +259,250 @@ export default function ProblemStatementSection() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
-            {/* Feature 1 */}
+            {/* Feature 1 - Enhanced with more sophisticated card design */}
             <motion.div 
-              className="rounded-2xl overflow-hidden group"
+              className="rounded-2xl overflow-hidden group relative"
               variants={item}
-              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 200, damping: 20 } }}
+              whileHover={{ 
+                y: -12, 
+                scale: 1.03, 
+                transition: { type: "spring", stiffness: 300, damping: 15 } 
+              }}
             >
-              <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative h-full">
+              {/* Card container with enhanced glassmorphism effect */}
+              <div className="glass-effect-dark backdrop-blur-sm border border-white/10 p-8 md:p-10 relative h-full">
+                {/* Card background elements */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-[#6FCFC3]/5 rounded-full blur-[60px] -z-10" />
+                <div className="absolute bottom-0 left-0 w-20 h-20 bg-[#4CB0A3]/5 rounded-full blur-[40px] -z-10" />
+                
+                {/* Icon with enhanced animation */}
                 <motion.div 
-                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#6FCFC3] to-[#2A6F79] flex items-center justify-center"
-                  whileHover={{ rotate: 5, scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
+                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#6FCFC3] to-[#2A6F79] flex items-center justify-center shadow-lg"
+                  whileHover={{ 
+                    rotate: [0, 5, -5, 0], 
+                    scale: [1, 1.15, 1.1],
+                    boxShadow: "0 0 20px rgba(111, 207, 195, 0.5)"
+                  }}
+                  transition={{ 
+                    duration: 0.6,
+                    ease: "easeInOut" 
+                  }}
                 >
-                  <MessageSquare className="h-7 w-7 text-white" />
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                  >
+                    <MessageSquare className="h-7 w-7 text-white" />
+                  </motion.div>
                 </motion.div>
                 
-                <h3 className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-colors duration-300">
+                {/* Text content with enhanced transitions */}
+                <motion.h3 
+                  className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-all duration-300"
+                  whileHover={{ x: 3 }}
+                >
                   Simplified Communication
-                </h3>
+                </motion.h3>
                 
-                <p className="text-white/70 mb-4">
+                <p className="text-white/70 mb-6 transition-all duration-300 group-hover:text-white/90">
                   Clear, jargon-free explanations that make finance accessible to everyone.
                 </p>
                 
-                {/* Animated gradient bar */}
+                {/* Animated border glow */}
                 <motion.div 
-                  className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#6FCFC3]/80 to-[#4CB0A3]"
-                  initial={{ width: "0%" }}
-                  whileInView={{ width: "100%" }}
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ boxShadow: "inset 0 0 0px rgba(111, 207, 195, 0)" }}
+                  whileHover={{ 
+                    boxShadow: "inset 0 0 2px rgba(111, 207, 195, 0.5)" 
+                  }}
+                  transition={{ duration: 0.4 }}
+                />
+                
+                {/* Animated gradient bar with enhanced visual */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[#6FCFC3] to-transparent"
+                  initial={{ width: "0%", x: "-100%" }}
+                  whileInView={{ width: "100%", x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 1.2 }}
+                  transition={{ delay: 0.3, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                />
+                
+                {/* Subtle radial gradient reveal on hover */}
+                <motion.div
+                  className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-[#6FCFC3]/0 blur-[40px]"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 0.1 }}
+                  transition={{ duration: 0.4 }}
                 />
               </div>
             </motion.div>
             
-            {/* Feature 2 */}
+            {/* Feature 2 - Enhanced with more sophisticated card design */}
             <motion.div 
-              className="rounded-2xl overflow-hidden group"
+              className="rounded-2xl overflow-hidden group relative"
               variants={item}
-              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 200, damping: 20 } }}
+              whileHover={{ 
+                y: -12, 
+                scale: 1.03, 
+                transition: { type: "spring", stiffness: 300, damping: 15 } 
+              }}
             >
-              <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative h-full">
+              {/* Card container with enhanced glassmorphism effect */}
+              <div className="glass-effect-dark backdrop-blur-sm border border-white/10 p-8 md:p-10 relative h-full">
+                {/* Card background elements */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-[#5FC0B6]/5 rounded-full blur-[60px] -z-10" />
+                <div className="absolute bottom-0 left-0 w-20 h-20 bg-[#3A8F89]/5 rounded-full blur-[40px] -z-10" />
+                
+                {/* Icon with enhanced animation */}
                 <motion.div 
-                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#5FC0B6]/80 to-[#3A8F89] flex items-center justify-center"
-                  whileHover={{ rotate: -5, scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
+                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#5FC0B6]/80 to-[#3A8F89] flex items-center justify-center shadow-lg"
+                  whileHover={{ 
+                    rotate: [0, -5, 5, 0], 
+                    scale: [1, 1.15, 1.1],
+                    boxShadow: "0 0 20px rgba(95, 192, 182, 0.5)"
+                  }}
+                  transition={{ 
+                    duration: 0.6,
+                    ease: "easeInOut" 
+                  }}
                 >
-                  <Users className="h-7 w-7 text-white" />
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: 0.5
+                    }}
+                  >
+                    <Users className="h-7 w-7 text-white" />
+                  </motion.div>
                 </motion.div>
                 
-                <h3 className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-colors duration-300">
+                {/* Text content with enhanced transitions */}
+                <motion.h3 
+                  className="text-xl font-medium mb-4 text-white group-hover:text-[#5FC0B6] transition-all duration-300"
+                  whileHover={{ x: 3 }}
+                >
                   User-Centered Design
-                </h3>
+                </motion.h3>
                 
-                <p className="text-white/70 mb-4">
+                <p className="text-white/70 mb-6 transition-all duration-300 group-hover:text-white/90">
                   Built around how people actually think about money, not how Wall Street does.
                 </p>
                 
-                {/* Animated gradient bar */}
+                {/* Animated border glow */}
                 <motion.div 
-                  className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#5FC0B6]/80 to-[#3A8F89]"
-                  initial={{ width: "0%" }}
-                  whileInView={{ width: "100%" }}
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ boxShadow: "inset 0 0 0px rgba(95, 192, 182, 0)" }}
+                  whileHover={{ 
+                    boxShadow: "inset 0 0 2px rgba(95, 192, 182, 0.5)" 
+                  }}
+                  transition={{ duration: 0.4 }}
+                />
+                
+                {/* Animated gradient bar with enhanced visual */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[#5FC0B6] to-transparent"
+                  initial={{ width: "0%", x: "-100%" }}
+                  whileInView={{ width: "100%", x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.4, duration: 1.2 }}
+                  transition={{ delay: 0.5, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                />
+                
+                {/* Subtle radial gradient reveal on hover */}
+                <motion.div
+                  className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-[#5FC0B6]/0 blur-[40px]"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 0.1 }}
+                  transition={{ duration: 0.4 }}
                 />
               </div>
             </motion.div>
             
-            {/* Feature 3 */}
+            {/* Feature 3 - Enhanced with more sophisticated card design */}
             <motion.div 
-              className="rounded-2xl overflow-hidden group"
+              className="rounded-2xl overflow-hidden group relative"
               variants={item}
-              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 200, damping: 20 } }}
+              whileHover={{ 
+                y: -12, 
+                scale: 1.03, 
+                transition: { type: "spring", stiffness: 300, damping: 15 } 
+              }}
             >
-              <div className="glass-effect-dark border border-white/10 p-8 md:p-10 relative h-full">
+              {/* Card container with enhanced glassmorphism effect */}
+              <div className="glass-effect-dark backdrop-blur-sm border border-white/10 p-8 md:p-10 relative h-full">
+                {/* Card background elements */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-[#4CB0A3]/5 rounded-full blur-[60px] -z-10" />
+                <div className="absolute bottom-0 left-0 w-20 h-20 bg-[#2A6F79]/5 rounded-full blur-[40px] -z-10" />
+                
+                {/* Icon with enhanced animation */}
                 <motion.div 
-                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] flex items-center justify-center"
-                  whileHover={{ rotate: 5, scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
+                  className="mb-6 w-16 h-16 rounded-full bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] flex items-center justify-center shadow-lg"
+                  whileHover={{ 
+                    rotate: [0, 5, -5, 0], 
+                    scale: [1, 1.15, 1.1],
+                    boxShadow: "0 0 20px rgba(76, 176, 163, 0.5)"
+                  }}
+                  transition={{ 
+                    duration: 0.6,
+                    ease: "easeInOut" 
+                  }}
                 >
-                  <Quote className="h-7 w-7 text-white" />
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: 1
+                    }}
+                  >
+                    <Quote className="h-7 w-7 text-white" />
+                  </motion.div>
                 </motion.div>
                 
-                <h3 className="text-xl font-medium mb-4 text-white group-hover:text-[#6FCFC3] transition-colors duration-300">
+                {/* Text content with enhanced transitions */}
+                <motion.h3 
+                  className="text-xl font-medium mb-4 text-white group-hover:text-[#4CB0A3] transition-all duration-300"
+                  whileHover={{ x: 3 }}
+                >
                   Value-Aligned Investing
-                </h3>
+                </motion.h3>
                 
-                <p className="text-white/70 mb-4">
+                <p className="text-white/70 mb-6 transition-all duration-300 group-hover:text-white/90">
                   Investment options that reflect your principles and goals, not just returns.
                 </p>
                 
-                {/* Animated gradient bar */}
+                {/* Animated border glow */}
                 <motion.div 
-                  className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79]"
-                  initial={{ width: "0%" }}
-                  whileInView={{ width: "100%" }}
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ boxShadow: "inset 0 0 0px rgba(76, 176, 163, 0)" }}
+                  whileHover={{ 
+                    boxShadow: "inset 0 0 2px rgba(76, 176, 163, 0.5)" 
+                  }}
+                  transition={{ duration: 0.4 }}
+                />
+                
+                {/* Animated gradient bar with enhanced visual */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[#4CB0A3] to-transparent"
+                  initial={{ width: "0%", x: "-100%" }}
+                  whileInView={{ width: "100%", x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 1.2 }}
+                  transition={{ delay: 0.7, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                />
+                
+                {/* Subtle radial gradient reveal on hover */}
+                <motion.div
+                  className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-[#4CB0A3]/0 blur-[40px]"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 0.1 }}
+                  transition={{ duration: 0.4 }}
                 />
               </div>
             </motion.div>

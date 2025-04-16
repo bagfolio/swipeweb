@@ -7,16 +7,25 @@ export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   
-  // Parallax effects for hero elements
+  // Enhanced parallax and scroll effects
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"]
   });
   
-  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const chartY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  // More dramatic, responsive parallax effects
+  const y1 = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "10%", "50%"]);
+  const y2 = useTransform(scrollYProgress, [0, 0.25, 1], ["0%", "5%", "25%"]);
+  
+  // Smoother, more controlled opacity transition
+  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.5], [1, 0.8, 0]);
+  const headingOpacity = useTransform(scrollYProgress, [0, 0.15, 0.3], [1, 0.9, 0]);
+  
+  // Different speed for chart to create depth
+  const chartY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  
+  // Horizontal movement for text elements on scroll
+  const textX = useTransform(scrollYProgress, [0, 0.5], ["0%", "-10%"]);
   
   useEffect(() => {
     // Trigger animation sequence
@@ -134,7 +143,7 @@ export default function HeroSection() {
       {/* Main content with parallax effect */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.div 
-          className="max-w-5xl mx-auto flex flex-col items-center justify-center"
+          className="max-w-5xl mx-auto flex flex-col items-start justify-center md:pl-12"
           initial="hidden"
           animate="visible"
           variants={{
@@ -150,7 +159,7 @@ export default function HeroSection() {
         >
           {/* Enhanced animated badge */}
           <motion.div
-            className="mb-12"
+            className="mb-10 self-start"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -160,7 +169,7 @@ export default function HeroSection() {
             }}
           >
             <motion.div 
-              className="px-6 py-2 rounded-full bg-[#6FCFC3]/10 border border-[#6FCFC3]/30 text-[#6FCFC3] font-medium"
+              className="px-6 py-2 rounded-full bg-[#6FCFC3]/10 border border-[#6FCFC3]/30 text-[#6FCFC3] font-semibold tracking-wider"
               whileHover={{ 
                 scale: 1.05,
                 boxShadow: "0 0 20px rgba(111, 207, 195, 0.3)"
@@ -171,11 +180,11 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
           
-          {/* Hero heading - much more minimal */}
+          {/* Hero heading with left alignment for more impact and horizontal scroll movement */}
           <motion.h1 
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-white tracking-tight text-center"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-white tracking-tight text-left"
             variants={fadeInUp}
-            style={{ y: y1 }}
+            style={{ y: y1, x: textX, opacity: headingOpacity }}
           >
             <span className="block">Investing Made</span>
             <motion.span 
@@ -194,18 +203,18 @@ export default function HeroSection() {
             </motion.span>
           </motion.h1>
           
-          {/* Super minimalist subtitle - just one line */}
+          {/* Strengthened subtitle with slightly more visual weight and horizontal slide effect */}
           <motion.p 
-            className="text-xl md:text-2xl text-white/70 mb-14 max-w-xl mx-auto font-light"
+            className="text-xl md:text-2xl text-white/80 mb-16 max-w-xl font-normal leading-relaxed"
             variants={fadeInUp}
-            style={{ y: y1 }}
+            style={{ y: y1, x: textX, opacity: headingOpacity }}
           >
             Take control of your financial future with confidence.
           </motion.p>
           
-          {/* Call to action buttons */}
+          {/* Call to action buttons - now left-aligned */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-8"
+            className="flex flex-col sm:flex-row items-start justify-start gap-8 self-start"
             variants={fadeInUp}
             style={{ y: y2 }}
           >
@@ -213,24 +222,29 @@ export default function HeroSection() {
               onClick={scrollToWaitlist}
               className="relative px-14 py-5 bg-gradient-to-r from-[#4CB0A3] to-[#2A6F79] text-white rounded-lg text-lg font-medium shadow-xl group overflow-hidden"
               whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 15px 30px -5px rgba(42, 111, 121, 0.5)"
+                scale: 1.05,
+                boxShadow: "0 20px 40px -10px rgba(42, 111, 121, 0.6)"
               }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.97 }}
             >
               <span className="relative z-10 flex items-center">
                 Join Waitlist
                 <motion.span
                   className="ml-2" 
                   initial={{ x: 0 }}
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.3 }}
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ 
+                    duration: 1.5, 
+                    ease: "easeInOut", 
+                    repeat: Infinity,
+                    repeatType: "loop" 
+                  }}
                 >
                   <ArrowRight size={18} />
                 </motion.span>
               </span>
               
-              {/* Background animation effect */}
+              {/* Enhanced background animation effect */}
               <motion.span 
                 className="absolute inset-0 bg-gradient-to-r from-[#2A6F79] to-[#4CB0A3] -z-10"
                 initial={{ x: "100%", opacity: 0 }}
@@ -241,16 +255,28 @@ export default function HeroSection() {
                 }}
               />
               
-              {/* Glowing effect */}
+              {/* Enhanced glowing effect */}
               <motion.span 
                 className="absolute inset-0 -z-20"
                 animate={{ 
-                  boxShadow: ["0 0 0px rgba(111, 207, 195, 0)", "0 0 25px rgba(111, 207, 195, 0.5)", "0 0 5px rgba(111, 207, 195, 0)"]
+                  boxShadow: ["0 0 0px rgba(111, 207, 195, 0)", "0 0 30px rgba(111, 207, 195, 0.6)", "0 0 5px rgba(111, 207, 195, 0)"]
                 }}
                 transition={{ 
                   repeat: Infinity,
-                  duration: 3,
+                  duration: 2.5,
                   ease: "easeInOut"
+                }}
+              />
+              
+              {/* Border highlight effect */}
+              <motion.span 
+                className="absolute inset-0 rounded-lg border border-[#6FCFC3]/0 z-10"
+                whileHover={{
+                  borderColor: ["rgba(111, 207, 195, 0)", "rgba(111, 207, 195, 0.5)", "rgba(111, 207, 195, 0)"],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5
                 }}
               />
             </motion.button>
