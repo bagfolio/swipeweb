@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { MessageSquare, Quote, Users } from "lucide-react";
 import { useRef } from "react";
-import chartPath from "../assets/chart.png";
+import chartPath from "../assets/bluechart.png";
 
 export default function ProblemStatementSection() {
   // Parallax scroll effects

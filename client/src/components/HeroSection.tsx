@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import logoPath from "../assets/logo.png";
-import chartPath from "../assets/chart.png";
+import chartPath from "../assets/bluechart.png";
 
 export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
