@@ -46,6 +46,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       message: "Privacy policy will be available soon." 
     });
   });
+  
+  // Get all waitlist subscribers (admin endpoint - could add authentication later)
+  app.get("/api/waitlist", async (_req, res) => {
+    try {
+      const subscribers = await storage.getAllWaitlistSubscribers();
+      return res.status(200).json(subscribers);
+    } catch (error) {
+      return res.status(500).json({ 
+        message: "Something went wrong. Please try again later." 
+      });
+    }
+  });
 
   const httpServer = createServer(app);
 

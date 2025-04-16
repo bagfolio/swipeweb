@@ -16,7 +16,7 @@ import {
   Mail, 
   Zap 
 } from "lucide-react";
-import chartPath from "../assets/chart.png";
+import chartPath from "../assets/bluechart.png";
 
 type FormValues = z.infer<typeof waitlistFormSchema>;
 
